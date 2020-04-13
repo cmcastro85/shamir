@@ -44,8 +44,11 @@ public class Gauss {
      */
     private void pivot(int f, int c) {
         for (int i = 0; i < n; i++) {
+        	//calcula el inverso modular del pivote
         	int inverse = modInverse((int) matrix[f][c], PRIME);
+        	//calcula el alpha 
             int alpha = (int) ((matrix[i][c] * inverse) % PRIME);
+            //Se resta alpha veces la fila del pivote a las demas
             for (int j = 0; j <= n; j++) {
                 if (i != f && j != c) {
                 	matrix[i][j] = (matrix[i][j] - alpha * matrix[f][j]) % PRIME;
@@ -56,9 +59,11 @@ public class Gauss {
                 }
             }
         }
+        // Deja en 0 la columna del pivote
         for (int i = 0; i < n; i++)
             if (i != f) matrix[i][c] = 0;
-
+        
+        //divide la fila del pivote por el valor de este
         for (int j = 0; j <= n; j++)
             if (j != c) {
             	int inverse = modInverse((int) matrix[f][c], PRIME);
