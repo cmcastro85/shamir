@@ -4,6 +4,8 @@ public class Gauss {
 	
 	private  int n;
 	
+	private static final int PRIME = 1301 ; 
+	
 	public Gauss(double[][] m, double[] b) {
 		n = b.length;
     	
@@ -19,43 +21,73 @@ public class Gauss {
         }
 	}
 	
+	
+
 	/**
 	 * Intercambia la fila 1 con la fila 2
 	 * @param fila1
 	 * @param fila2
 	 */
     private void swap(int fila1, int fila2) {
-        double[] temp = matrix[fila1];
+    	double[] temp = matrix[fila1];
         matrix[fila1] = matrix[fila2];
         matrix[fila2] = temp;
     }
     
     /**
      * Usar el pivote para realizar eliminación gaussiana.
-     * Se resta alpha veces todo menos la fila i y la columna j
-     * Se deja en cero todo lo que no sea el pivote dentro de la columna q
+     * Se resta alpha veces tdo menos la fila i y la columna j
+     * Se deja en cero tdo lo que no sea el pivote dentro de la columna q
      * 
      * @param f fila del pivote
      * @param c columna del pivote
      */
     private void pivot(int f, int c) {
-
         for (int i = 0; i < n; i++) {
-            double alpha = matrix[i][c] / matrix[f][c];
+        	int inverse = modInverse((int) matrix[f][c], PRIME);
+            int alpha = (int) ((matrix[i][c] * inverse) % PRIME);
             for (int j = 0; j <= n; j++) {
-                if (i != f && j != c) matrix[i][j] -= (alpha * matrix[f][j]);
+                if (i != f && j != c) {
+                	matrix[i][j] = (matrix[i][j] - alpha * matrix[f][j]) % PRIME;
+                	if (matrix[i][j] <0) {
+                		matrix[i][j] += PRIME; 
+
+                	}
+                }
             }
         }
-
         for (int i = 0; i < n; i++)
-            if (i != f) matrix[i][c] = 0.0;
+            if (i != f) matrix[i][c] = 0;
 
         for (int j = 0; j <= n; j++)
             if (j != c) {
-            	matrix[f][j] /= matrix[f][c];
-            	matrix[f][j] %= 1301;
-            }
-        matrix[f][c] = 1.0;
+            	int inverse = modInverse((int) matrix[f][c], PRIME);
+            	matrix[f][j] *= inverse;
+            	matrix[f][j] %= PRIME;
+            	}
+        matrix[f][c] = 1;
+    }
+    
+    // Function to find modular inverse of a  
+    // under modulo m Assumption: m is prime 
+    private int modInverse(int a, int m) 
+    { 
+        return power(a, m - 2, m);
+    }
+    
+    // To compute x^y under modulo m 
+    private int power(int x, int y, int m)  
+    { 
+        if (y == 0) 
+            return 1; 
+          
+        int p = power(x, y / 2, m) % m; 
+        p = (p * p) % m; 
+      
+        if (y % 2 == 0) 
+            return p; 
+        else
+            return (x * p) % m; 
     }
     
     /**
@@ -92,4 +124,5 @@ public class Gauss {
 	     }
 	     StdOut.println();
     }
+
 }
