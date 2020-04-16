@@ -25,6 +25,19 @@ public class Test {
 		double[] b = {600,960,120,360};
 		Gauss gausss = new Gauss(a, b);
 		double[][] sol =gausss.gaussJordan();
+		
+		int i = 0;
+		while (b[0] != a[0][0]*sol[0][4]+a[0][1]*sol[1][4]+a[0][2]*sol[2][4]+a[0][3]*sol[3][4]) {
+			System.out.println("change");
+			
+			int temp = (int) (sol[i][4]);
+			sol[i][4] -= 1301;
+			if(b[0] == a[0][0]*sol[0][4]+a[0][1]*sol[1][4]+a[0][2]*sol[2][4]+a[0][3]*sol[3][4]) {
+				break;
+			}
+			sol[i][4] = temp;
+			i++;
+		}
 		gausss.show(sol);
 	}
 	
@@ -39,6 +52,8 @@ public class Test {
 		Gauss gausss = new Gauss(a, b);
 		double[][] sol =gausss.gaussJordan();
 		gausss.show(sol);
+		
+		
 		
 	}
 	
