@@ -4,10 +4,17 @@ public class Gauss {
 	
 	private  int n;
 	
+	private double[][] m;
+	
+	private double[] b;
+	
 	private static final int PRIME = 1301 ; 
 	
 	public Gauss(double[][] m, double[] b) {
 		n = b.length;
+		
+		this.b = b;
+		this.m = m;
     	
     	matrix = new double[n][n+1];
         for (int i = 0; i < n; i++) {
@@ -95,6 +102,31 @@ public class Gauss {
             return (x * p) % m; 
     }
     
+    private void fixer() {
+		int i = 0;
+		while (i<b.length) {
+			int j = 0;
+			while(j < b.length) {
+				int temp1 = (int) matrix[i][4];
+				int temp2 = (int) matrix[j][4];
+				if(i == j) {
+					matrix[i][4] -= 1301;
+				}
+				else {
+					matrix[i][4] -= 1301;
+					matrix[j][4] -= 1301;
+				}
+				if(b[0] == m[0][0]*matrix[0][4]+m[0][1]*matrix[1][4]+m[0][2]*matrix[2][4]+m[0][3]*matrix[3][4]) {
+					break;
+				}
+				matrix[i][4] = temp1;
+				matrix[j][4] = temp2;
+				j++;
+			}
+			i++;
+		}
+	}
+    
     /**
      * Gauss-Jordan elimination.
      * @return
@@ -114,6 +146,7 @@ public class Gauss {
 
             pivot(p, p);
         }
+        fixer();
     	return matrix;
     }
     

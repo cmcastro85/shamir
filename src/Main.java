@@ -46,9 +46,16 @@ public class Main {
 	     
 	    gauss.show(sol);
 	    */
-		Test tester = new Test();
-		tester.test1();
-		tester.test2();
-		tester.test3();
+		double[][] a = {
+	            {  64, 16, 4, 1},
+	            {  27,  9, 3, 1},
+	            {   8,  4, 2, 1},
+	            {   1,  1, 1, 1}
+	        };
+		double[] b = {427, 171, 53, 13};
+		Gauss gauss = new Gauss(a, b);
+		double[][] sol = gauss.gaussJordan();
+		
+		gauss.show(sol);
 	}
 }
