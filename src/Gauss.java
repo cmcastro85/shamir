@@ -104,27 +104,21 @@ public class Gauss {
     
     private void fixer() {
 		int i = 0;
+		outerloop:
 		while (i<b.length) {
 			int j = 0;
 			while(j < b.length) {
-				int temp1 = (int) matrix[i][4];
-				int temp2 = (int) matrix[j][4];
+				int temp1 = (int) matrix[i][n];
+				int temp2 = (int) matrix[j][n];
 				if(i == j) {
-					matrix[i][4] -= PRIME; 
-					System.out.println(matrix[i][4]);
+					matrix[i][n] -= PRIME; 
 				}else {
-					matrix[i][4] -= PRIME;
-					matrix[j][4] -= PRIME;
+					matrix[i][n] -= PRIME;
+					matrix[j][n] -= PRIME;
 				}
 				
-				if(b[0] == (m[0][0]*matrix[0][4]+m[0][1]*matrix[1][4]+m[0][2]*matrix[2][4]+m[0][3]*matrix[3][4])%PRIME &&
-						b[1] == (m[1][0]*matrix[0][4]+m[1][1]*matrix[1][4]+m[1][2]*matrix[2][4]+m[1][3]*matrix[3][4])%PRIME &&
-						b[2] == (m[2][0]*matrix[0][4]+m[2][1]*matrix[1][4]+m[2][2]*matrix[2][4]+m[2][3]*matrix[3][4])%PRIME &&
-						b[3] == (m[3][0]*matrix[0][4]+m[3][1]*matrix[1][4]+m[3][2]*matrix[2][4]+m[3][3]*matrix[3][4])%PRIME) {
-					System.out.println("Fixed");
-					i= b.length;
-					j= b.length;
-					break;
+				if(b[0] == f()) {
+					break outerloop;
 				}
 				matrix[i][4] = temp1;
 				matrix[j][4] = temp2;
@@ -133,6 +127,14 @@ public class Gauss {
 			i++;
 		}
 	}
+    
+    private int f() {
+    	int fx = 0;
+    	for(int i=0;i<n;i++) {
+    		fx += m[0][i]*matrix[i][n];
+    	}
+    	return fx%PRIME;
+    }
     
     /**
      * Gauss-Jordan elimination.
