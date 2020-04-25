@@ -117,7 +117,7 @@ public class Gauss {
 					matrix[j][n] -= PRIME;
 				}
 				
-				if(b[0] == f()) {
+				if(b[0] == fx()) {
 					break outerloop;
 				}
 				matrix[i][4] = temp1;
@@ -128,7 +128,7 @@ public class Gauss {
 		}
 	}
     
-    private int f() {
+    private int fx() {
     	int fx = 0;
     	for(int i=0;i<n;i++) {
     		fx += m[0][i]*matrix[i][n];
