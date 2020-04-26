@@ -22,7 +22,7 @@ public class Main {
 		double[] b = new double[n];
 		
 		for(int i = 0;i<n;i++) {
-			System.out.println("Escriba un punto ( f(x), x )  separados por un espacio");
+			System.out.println("Escriba un punto (f(x), x)  separados por un espacio");
 			int x = sc.nextInt();
 		    int p = sc.nextInt();
 		    b[i] = p;
